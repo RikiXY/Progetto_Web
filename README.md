@@ -3,4 +3,4 @@ Progetto per l'esame di Programmazione Web della facoltà degli di Cagliari svol
 - Amato Riccardo Giuseppe
 - Porcu Francesco
 - Spada Alberto
-- Mura Andre 
+- Mura Andrea
