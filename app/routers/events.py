@@ -58,6 +58,28 @@ def delete_event(
     session.commit()  # conferma le modifiche al database
     return f"Event {event_id} successfully deleted"
 
+@router.post("/{event_id}/register")    
+def register_for_event(
+        session: SessionDep,  # Sessione del database
+        event_id: Annotated[int, Path(description="The ID of the event to register for")], 
+        registration: RegistrationCreate  # Dati inviati per la registrazione         
+    ):  
+    """ 
+    Registra un utente per un evento specifico.
+    """ 
+    if session.get(Event, event_id) is None:  # Controlla se l'evento esiste
+        raise HTTPException(status_code=404, detail="Event not found")  # Solleva un'eccezione HTTP 404 se l'evento non esiste
+    if session.get(User, registration.username) is None:  # Controlla se l'utente esiste    
+        raise HTTPException(status_code=404, detail="User not found")   # Solleva un'eccezione HTTP 404 se l'utente non esiste  
+    if session.get(Registration, (registration.username, event_id)) is not None:  # Controlla se l'utente è già registrato per l'evento
+        raise HTTPException(status_code=400, detail="User already registered for this event")  # Solleva un'eccezione HTTP 400 se l'utente è già registrato
+    
+    complete_registration = Registration(username=registration.username, event_id=event_id)  # Crea un oggetto Registration completo        
+    validated_registration = Registration.model_validate(complete_registration)  # Valida l'oggetto Registration        
+    session.add(validated_registration)  # Aggiunge la registrazione al database          
+    session.commit()  # Conferma le modifiche al database
+    return f"User {registration.username} successfully registered for event {event_id}" 
+
 @router.post("/")
 def add_event(event: EventCreate, session: SessionDep):  # viene aggiunto un nuovo evento
     """Aggiunge un nuovo evento"""
