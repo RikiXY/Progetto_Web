@@ -11,7 +11,7 @@ router = APIRouter(prefix ="/events")
 @router.get("/")
 def get_all_events(session: SessionDep) -> list[EventPublic]:  # SessionDep apre una sessione del database, con cui si potrà fare query, etc.
     # la funzione restituirà una lista di oggetti EventPublic
-    """Returns all events"""
+    """Restituisce tutti gli eventi"""
     statement = select(Event)  # costruisce una query, questa andrà a cercare tutti gli eventi nel DB
     events = session.exec(statement).all()  # ottiene tutti i risultati della query come lista di oggetti
     return events  # la lista viene restituita come risposta dell'API
@@ -34,6 +34,14 @@ def update_event(
     session.add(event)  # Aggiunge l'evento aggiornato alla sessione
     session.commit()  # Applica le modifiche al database
     return f"Event {event.id} successfully updated"
+
+@router.post ("/")
+def delete_all_events(session: SessionDep):  # viene definita la funzione 
+    """Cancella tutti gli eventi"""
+    statement = delete(Event)  # viene creata una query per cancellare tutte le righe della righe della tabella Event
+    session.exec(statement)  # viene eseguita la query sul db usando la sessione attiva
+    session.commit()  # conferma le modifiche fatte durante la sessione, rendendole definitive
+    return "All events successfully deleted"
 
 @router.delete("/{event_id}")  
 def delete_event(

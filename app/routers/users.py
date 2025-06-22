@@ -11,7 +11,7 @@ def get_all_users(session: SessionDep) -> list[UserPublic]:
     """Ritorna tutti gli utenti registrati."""
     query = select(User)  # Crea una query per selezionare tutti gli utenti
     users = session.exec(query).all()  # Esegue la query e ottiene tutti gli utenti
-    return f"List of users: {users}"
+    return users
 
 @router.post("/")
 def add_user(user: UserCreate, session: SessionDep) -> UserPublic:
@@ -38,7 +38,7 @@ def get_user(
     user = session.get(User, username)
     if user is None: 
         raise HTTPException(status_code=404, detail="User not found")  # Solleva un'eccezione HTTP 404 se l'utente non esiste
-    return f"User found: {user.username}"
+    return user
 
 @router.delete("/{username}")
 def delete_user(
@@ -51,6 +51,6 @@ def delete_user(
     user = session.get(User, username)  # recupero l'utente dal db usando l'username (chiave primaria)
     if user is None: 
         raise HTTPException(status_code=404, detail="User not found")  # Sollevo un'eccezione  HTTP 404 se l'utente non esiste 
-    session.delete(user) # cancella l'utente dal database
-    session.commit() # conferma le modifiche al database   
-    return "User successfully deleted"
+    session.delete(user)  # cancella l'utente dal database
+    session.commit()  # conferma le modifiche al database   
+    return f"User {username} deleted successfully."
