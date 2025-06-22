@@ -7,23 +7,23 @@ Progetto per l'esame di Programmazione Web della facoltà degli di Cagliari svol
 
 ## Suddivisione API
 Riccardo: 
-- Users@GET("/")
-- Users@POST("/")
-- Users@DELETE("/")
-- Users@GET("/{username}")
+- [X] Users@GET("/")
+- [X] Users@POST("/")
+- [ ] Users@DELETE("/")
+- [ ] Users@GET("/{username}")
 
 Francesco:
-- Users@DELETE("/{username}")
-- Events@DELETE("/{event_id}")
-- Events@POST("/{event_id}/register")
+- [ ] Users@DELETE("/{username}")
+- [ ] Events@DELETE("/{event_id}")
+- [ ] Events@POST("/{event_id}/register")
 
 Alberto:
-- Events@GET("/")
-- Events@POST("/")
-- Events@DELETE("/")
-- Events@GET("/{event_id}")
+- [X] Events@GET("/")
+- [ ] Events@POST("/")
+- [ ] Events@DELETE("/")
+- [ ] Events@GET("/{event_id}")
 
 Andrea:
-- Events@PUT("/{event_id}")
-- Registrations@GET("/")
-- Registrations@POST("/")
+- [X] Events@PUT("/{event_id}")
+- [X] Registrations@GET("/")
+- [X] Registrations@DELETE("/")
