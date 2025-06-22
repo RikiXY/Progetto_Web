@@ -18,7 +18,7 @@ Francesco:
 - [ ] Events@POST("/{event_id}/register")
 
 Alberto:
-- [ ] Events@GET("/")
+- [X] Events@GET("/")
 - [ ] Events@POST("/")
 - [ ] Events@DELETE("/")
 - [ ] Events@GET("/{event_id}")
