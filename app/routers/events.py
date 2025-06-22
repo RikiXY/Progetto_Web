@@ -87,3 +87,14 @@ def add_event(event: EventCreate, session: SessionDep):  # viene aggiunto un nuo
     session.add(validated_event)  # viene aggiunto il nuovo evento alla sessione
     session.commit()  # con il commit viene salvato il nuovo evento nel db
     return "Event successfully added"  
+
+@router.get("/{event_id}")
+def get_event(
+        session: SessionDep,
+        event_id: Annotated[int, Path(description="The ID of the event to get")]  # prende il parametro event_id 
+    ) -> EventPublic:  # formato nel quale sarà serializzato
+    """Restituisce un evento dato il suo ID."""
+    event = session.get(Event, event_id)  # viene cercato nel db l'evento con chiave primaria uguale a event_id
+    if event is None:  # se non esiste un evento con quell'ID, viene sollevata un'eccezione HTTP 404
+        raise HTTPException(status_code = 404, detail ="Event not found")  # messaggio mostrato
+    return event
