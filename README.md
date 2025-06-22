@@ -9,12 +9,12 @@ Progetto per l'esame di Programmazione Web della facoltà degli di Cagliari svol
 Riccardo: 
 - [X] Users@GET("/")
 - [X] Users@POST("/")
-- [ ] Users@DELETE("/")
-- [ ] Users@GET("/{username}")
+- [X] Users@DELETE("/")
+- [X] Users@GET("/{username}")
 
 Francesco:
-- [ ] Users@DELETE("/{username}")
-- [ ] Events@DELETE("/{event_id}")
+- [X] Users@DELETE("/{username}")
+- [x] Events@DELETE("/{event_id}")
 - [ ] Events@POST("/{event_id}/register")
 
 Alberto:

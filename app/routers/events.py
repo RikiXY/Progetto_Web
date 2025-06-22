@@ -35,10 +35,18 @@ def update_event(
     session.commit()  # Applica le modifiche al database
     return f"Event {event.id} successfully updated"
 
-@router.post ("/")
-def delete_all_events(session: SessionDep):  # viene definita la funzione 
-    """Cancella tutti gli eventi"""
-    statement = delete(Event)  # viene creata una query per cancellare tutte le righe della righe della tabella Event
-    session.exec(statement)  # viene eseguita la query sul db usando la sessione attiva
-    session.commit()  # conferma le modifiche fatte durante la sessione, rendendole definitive
-    return "All events successfully deleted"
+@router.delete("/{event_id}")  
+def delete_event(
+        session: SessionDep,  # Sessione del database
+        event_id: Annotated[int, Path(description="The ID of the event to delete")] 
+    ):  
+    """ 
+    Elimina un evento in base all'ID.
+    """
+    event = session.get(Event, event_id)  # recupera l'evento dal database usando l'ID (chiave primaria)
+    if event is None:
+        raise HTTPException(status_code=404, detail="Event not found")  # Solleva un'eccezione HTTP 404 se l'evento non esiste  
+    session.delete(event)  # cancella l'evento dal database
+    session.commit()  # conferma le modifiche al database
+    return f"Event {event_id} successfully deleted"
+
