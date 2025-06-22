@@ -1,4 +1,5 @@
 from sqlmodel import create_engine, SQLModel, Session
+from sqlalchemy import event
 from typing import Annotated
 from fastapi import Depends
 import os
@@ -15,6 +16,12 @@ sqlite_url = f"sqlite:///{sqlite_file_name}"
 connect_args = {"check_same_thread": False}
 engine = create_engine(sqlite_url, connect_args=connect_args, echo=True)
 
+# Abilita il controllo del vincolo di integrità referenziale per le chiavi esterne
+@event.listens_for(engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
 
 def init_database() -> None:
     ds_exists = os.path.isfile(sqlite_file_name)
