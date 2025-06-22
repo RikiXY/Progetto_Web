@@ -35,7 +35,7 @@ def delete_user(
     username: Annotated[str, Path(description="The username of the user to delete")] 
     ):
     """
-    Delete a user by username.
+    Elimina un utente in base al nome utente.
     """
     user = session.get(User, username)  # recupero l'utente dal db usando l'username (chiave primaria)
     if user is None: 
