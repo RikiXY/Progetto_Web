@@ -25,16 +25,16 @@ def init_database() -> None:
             for _ in range(10):
                 user = User(
                     username=f.user_name(),
-                    name=f.name(),
-                    email=f.email(),
+                    name=f.name()[:50],
+                    email=f.email()[:100],
                 )
                 session.add(user)
             for _ in range(10):
                 event = Event(
-                    title=f.sentence(),
+                    title=f.sentence()[:50],
                     description=f.text(),
                     date=f.date_time_this_year(),
-                    location=f.city(),
+                    location=f.city()[:100],
                 )
                 session.add(event)
             session.commit()
