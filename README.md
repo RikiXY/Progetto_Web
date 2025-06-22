@@ -14,7 +14,7 @@ Riccardo:
 
 Francesco:
 - [X] Users@DELETE("/{username}")
-- [ ] Events@DELETE("/{event_id}")
+- [x] Events@DELETE("/{event_id}")
 - [ ] Events@POST("/{event_id}/register")
 
 Alberto:
