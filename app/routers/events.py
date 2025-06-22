@@ -35,7 +35,7 @@ def update_event(
     session.commit()  # Applica le modifiche al database
     return f"Event {event.id} successfully updated"
 
-@router.post ("/")
+@router.delete ("/")
 def delete_all_events(session: SessionDep):  # viene definita la funzione 
     """Cancella tutti gli eventi"""
     statement = delete(Event)  # viene creata una query per cancellare tutte le righe della righe della tabella Event
@@ -58,3 +58,10 @@ def delete_event(
     session.commit()  # conferma le modifiche al database
     return f"Event {event_id} successfully deleted"
 
+@router.post("/")
+def add_event(event: EventCreate, session: SessionDep):  # viene aggiunto un nuovo evento
+    """Aggiunge un nuovo evento"""
+    validated_event = Event.model_validate(event)  # validazione e creazione dell'evento per il db
+    session.add(validated_event)  # viene aggiunto il nuovo evento alla sessione
+    session.commit()  # con il commit viene salvato il nuovo evento nel db
+    return "Event successfully added"  
