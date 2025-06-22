@@ -26,4 +26,4 @@ Alberto:
 Andrea:
 - Events@PUT("/{event_id}")
 - Registrations@GET("/")
-- Registrations@POST("/")
+- Registrations@DELETE("/")
