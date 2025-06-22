@@ -53,4 +53,4 @@ def delete_user(
         raise HTTPException(status_code=404, detail="User not found")  # Sollevo un'eccezione  HTTP 404 se l'utente non esiste 
     session.delete(user)  # cancella l'utente dal database
     session.commit()  # conferma le modifiche al database   
-    return "User successfully deleted"
+    return f"User {username} deleted successfully."
