@@ -17,6 +17,10 @@ def get_all_users(session: SessionDep) -> list[UserPublic]:
 def add_user(user: UserCreate, session: SessionDep):
     """Aggiunge un nuovo utente."""
     validated_user = User.model_validate(user)
+    if session.get(User, validated_user.username) is not None:
+        raise HTTPException(status_code=400, detail="Username already exists")  # Se esiste già un utente con lo stesso username, solleva un'eccezione HTTP 400
+    if session.exec(select(User).where(User.email == validated_user.email)).first() is not None:
+        raise HTTPException(status_code=400, detail="Email already exists")  # Se esiste già un utente con la stessa email, solleva un'eccezione HTTP 400
     session.add(validated_user)  # Aggiunge l'utente alla sessione
     session.commit()
     return f"User {validated_user.username} added successfully."
