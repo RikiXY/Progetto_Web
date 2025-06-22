@@ -29,6 +29,17 @@ def delete_all_users(session: SessionDep):
     session.commit() 
     return "All users successfully deleted"
 
+@router.get("/{username}")
+def get_user(
+        session: SessionDep,
+        username: Annotated[str, Path(description="The username of the user to retrieve")]
+    ) -> UserPublic:
+    """Restituisce un utente specifico secondo l'username."""
+    user = session.get(User, username)
+    if user is None: 
+        raise HTTPException(status_code=404, detail="User not found")  # Solleva un'eccezione HTTP 404 se l'utente non esiste
+    return f"User found: {user.username}"
+
 @router.delete("/{username}")
 def delete_user(
     session: SessionDep,  # Sessione del database

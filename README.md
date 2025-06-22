@@ -10,7 +10,7 @@ Riccardo:
 - [X] Users@GET("/")
 - [X] Users@POST("/")
 - [X] Users@DELETE("/")
-- [ ] Users@GET("/{username}")
+- [X] Users@GET("/{username}")
 
 Francesco:
 - [X] Users@DELETE("/{username}")
