@@ -22,4 +22,4 @@ def update_event(
     event.location = event_update.location  # Aggiorna la posizione dell'evento
     session.add(event)  # Aggiunge l'evento aggiornato alla sessione
     session.commit()  # Applica le modifiche al database
-    return "Event successfully updated"
+    return f"Event {event.id} successfully updated"
