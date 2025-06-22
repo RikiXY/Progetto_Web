@@ -13,7 +13,7 @@ Riccardo:
 - [ ] Users@GET("/{username}")
 
 Francesco:
-- [ ] Users@DELETE("/{username}")
+- [X] Users@DELETE("/{username}")
 - [ ] Events@DELETE("/{event_id}")
 - [ ] Events@POST("/{event_id}/register")
 
