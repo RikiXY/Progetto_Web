@@ -14,7 +14,7 @@ def get_all_users(session: SessionDep) -> list[UserPublic]:
     return users
 
 @router.post("/")
-def add_user(user: UserCreate, session: SessionDep) -> UserPublic:
+def add_user(user: UserCreate, session: SessionDep):
     """Aggiunge un nuovo utente."""
     validated_user = User.model_validate(user)
     session.add(validated_user)  # Aggiunge l'utente alla sessione
