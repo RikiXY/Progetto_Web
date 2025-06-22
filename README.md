@@ -20,8 +20,8 @@ Francesco:
 Alberto:
 - [X] Events@GET("/")
 - [X] Events@POST("/")
-- [ ] Events@DELETE("/")
-- [ ] Events@GET("/{event_id}")
+- [X] Events@DELETE("/")
+- [X] Events@GET("/{event_id}")
 
 Andrea:
 - [X] Events@PUT("/{event_id}")
