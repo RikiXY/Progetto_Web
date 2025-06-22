@@ -1,4 +1,4 @@
-from sqlmodel import create_engine, SQLModel, Session, select
+from sqlmodel import create_engine, SQLModel, Session
 from typing import Annotated
 from fastapi import Depends
 import os
@@ -6,6 +6,8 @@ from faker import Faker
 from app.config import config
 # TODO: remember to import all the DB models here
 from app.models.registration import Registration  # NOQA
+from app.models.event import Event  # NOQA
+from app.models.user import User  # NOQA
 
 
 sqlite_file_name = config.root_dir / "data/database.db"
@@ -20,8 +22,22 @@ def init_database() -> None:
     if not ds_exists:
         f = Faker("it_IT")
         with Session(engine) as session:
-            # TODO: (optional) initialize the database with fake data
-            ...
+            for _ in range(10):
+                user = User(
+                    username=f.user_name(),
+                    name=f.name(),
+                    email=f.email(),
+                )
+                session.add(user)
+            for _ in range(10):
+                event = Event(
+                    title=f.sentence(),
+                    description=f.text(),
+                    date=f.date_time_this_year(),
+                    location=f.city(),
+                )
+                session.add(event)
+            session.commit()
 
 
 def get_session():
