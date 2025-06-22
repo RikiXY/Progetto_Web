@@ -8,8 +8,8 @@ class RegistrationBase(SQLModel):
 class Registration(RegistrationBase, table=True):
     # username e event_id sono le chiavi primarie (e chiavi esterne) della tabella Registration
     # Entrambi sono impostati come ondelete="CASCADE" per eliminare le registrazioni associate quando l'utente o l'evento vengono eliminati
-    username: str = Field(primary_key=True, foreign_key="user.username", ondelete="CASCADE") # Chiave primaria e chiave esterna usando l'username dell'utente
-    event_id: int = Field(primary_key=True, foreign_key="event.id", ondelete="CASCADE") # Chiave primaria e chiave esterna usando l'ID dell'evento
+    username: str = Field(primary_key=True, foreign_key="user.username", ondelete="CASCADE")  # Chiave primaria e chiave esterna usando l'username dell'utente
+    event_id: int = Field(primary_key=True, foreign_key="event.id", ondelete="CASCADE")  # Chiave primaria e chiave esterna usando l'ID dell'evento
 
 # Definisce quello che viene restituito dall'API
 class RegistrationPublic(RegistrationBase):
