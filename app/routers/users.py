@@ -1,7 +1,7 @@
 from typing import Annotated    
 from fastapi import APIRouter, HTTPException, Path
 from app.data.db import SessionDep 
-from sqlmodel import select
+from sqlmodel import select, delete
 from app.models.user import User, UserCreate, UserPublic
 
 router = APIRouter(prefix="/users")
@@ -20,6 +20,14 @@ def add_user(user: UserCreate, session: SessionDep) -> UserPublic:
     session.add(validated_user)  # Aggiunge l'utente alla sessione
     session.commit()
     return f"User {validated_user.username} added successfully."
+
+@router.delete("/")
+def delete_all_users(session: SessionDep):
+    """Cancella tutti gli utenti."""
+    query = delete(User)  # Crea una query per cancellare tutti gli utenti
+    session.exec(query)
+    session.commit() 
+    return "All users successfully deleted"
 
 @router.delete("/{username}")
 def delete_user(
