@@ -12,7 +12,7 @@ Riccardo:
 - [X] Users@DELETE("/")
 - [X] Users@GET("/{username}")
 - [X] Test modello User
-- [ ] Test proprie API
+- [X] Test proprie API
 
 Francesco:
 - [X] Users@DELETE("/{username}")
