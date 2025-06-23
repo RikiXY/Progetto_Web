@@ -11,7 +11,7 @@ Riccardo:
 - [X] Users@POST("/")
 - [X] Users@DELETE("/")
 - [X] Users@GET("/{username}")
-- [X] Test modello User
+- [ ] Test modello User
 - [ ] Test proprie API
 
 Francesco:
