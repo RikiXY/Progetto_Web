@@ -33,4 +33,5 @@ Andrea:
 - [X] Registrations@GET("/")
 - [X] Registrations@DELETE("/")
 - [X] Test modello Registration
-- [X] Test proprie API
+- [ ] Test proprie API
+- [X] File di base per i test
