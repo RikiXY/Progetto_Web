@@ -31,7 +31,7 @@ def delete_all_users(session: SessionDep):
     query = delete(User)  # Crea una query per cancellare tutti gli utenti
     session.exec(query)
     session.commit() 
-    return "All users successfully deleted"
+    return "All users successfully deleted."
 
 @router.get("/{username}")
 def get_user(
