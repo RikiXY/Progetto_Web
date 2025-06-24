@@ -18,8 +18,8 @@ Francesco:
 - [X] Users@DELETE("/{username}")
 - [X] Events@DELETE("/{event_id}")
 - [X] Events@POST("/{event_id}/register")
-- [ ] Test modello Event
-- [ ] Test proprie API
+- [X] Test modello Event
+- [X] Test proprie API
 
 Alberto:
 - [X] Events@GET("/")
