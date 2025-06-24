@@ -77,18 +77,18 @@ def test_get_user_not_found(client: TestClient):
     
 # Test per eliminare un utente con successo
 def test_delete_user_success(client: TestClient, session: Session):
-    user = session.add(User(
+    user = User(
         username = "Naska",
         name = "Diego Caterbetti",
         email= "diego.caterbetti@gmail.com" 
-        ))  # Aggiungo un utente al database   
+        )  # Aggiungo un utente al database   
     session.add(user)  # Aggiungo l'utente al database   
     session.commit()  # Salvo le modifiche  
     
     response = client.delete(f"/users/{user.username}")  # Invio una richiesta DELETE per eliminare l'utente
     
     assert response.status_code == 200  # Controllo che il codice di stato sia 200 (OK)
-    assert response.json() == f"User {user.username} deleted successfully"  # Controllo che la risposta sia corretta    
+    assert response.json() == f"User {user.username} deleted successfully."  # Controllo che la risposta sia corretta    
     assert session.get(User, user.username) is None  # Controllo che l'utente sia stato eliminato
     
 # Test per eliminare un utente che non esiste
