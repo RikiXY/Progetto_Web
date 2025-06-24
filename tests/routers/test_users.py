@@ -77,11 +77,12 @@ def test_get_user_not_found(client: TestClient):
     
 # Test per eliminare un utente con successo
 def test_delete_user_success(client: TestClient, session: Session):
-    session.add(User(
+    user = session.add(User(
         username = "Naska",
         name = "Diego Caterbetti",
         email= "diego.caterbetti@gmail.com" 
-        ))  # Aggiungo un utente al database    
+        ))  # Aggiungo un utente al database   
+    session.add(user)  # Aggiungo l'utente al database   
     session.commit()  # Salvo le modifiche  
     
     response = client.delete(f"/users/{user.username}")  # Invio una richiesta DELETE per eliminare l'utente

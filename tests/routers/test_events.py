@@ -45,7 +45,7 @@ def test_register_event_success(client: TestClient, session: Session):
     user, event = create_test_user_event(session)  # Creo un utente e un evento di test
     response = client.post(
         f"/events/{event.id}/register", 
-        json = {"user_id": user.username}  
+        json = {"username": user.username}  
     )  # Invio una richiesta POST per registrare l'utente all'evento
     
     registration = session.get(Registration, (user.username, event.id))  # Recupera la registrazione dal database               
@@ -59,7 +59,7 @@ def test_register_event_not_found(client: TestClient, session: Session):
     user = create_test_user_event(session)[0]  # Creo un utente di test
     response = client.post(
             f"/events/999/register", 
-            json={"user_id": user.username} 
+            json={"username": user.username} 
     )  # Invio una richiesta POST per registrare l'utente all'evento con ID 999 che non esiste
     
     assert response.status_code == 404  # Controlla che il codice di stato sia 404 (Not Found)  
@@ -83,13 +83,13 @@ def test_register_event_already_registered(client: TestClient, session: Session)
     # Creo una registrazione per l'utente all'evento
     client.post(
         f"/events/{event.id}/register",
-        json = {"user_id": user.username}
+        json = {"username": user.username}
     )  
     
     # Invio una richiesta POST per registrare nuovamente l'utente all'evento
     response = client.post( 
         f"/events/{event.id}/register", 
-        json = {"user_id": user.username}  
+        json = {"username": user.username}  
     )
     
     assert response.status_code == 400  # Controlla che il codice di stato sia 400 (Bad Request)
