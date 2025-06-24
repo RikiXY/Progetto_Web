@@ -51,7 +51,7 @@ def test_delete_all_users(client: TestClient, session: Session):
 
     resp = client.delete("/users/")  # Eseguo una DELETE per cancellare tutti gli utenti
     assert resp.status_code == 200  # Controllo che la risposta sia 200 OK
-    assert resp.json() == "All users successfully deleted"  # Controllo il messaggio di successo
+    assert resp.json() == "All users successfully deleted."  # Controllo il messaggio di successo
 
     assert len(session.exec(select(User)).all()) == 0  # Verifico che non ci siano più utenti nel database
 
