@@ -10,7 +10,7 @@ def test_event_creation(session: Session):
         title = "Hackaton",
         description = "Sfida di programmazione",
         date = datetime(2025, 6, 24, 23, 00),
-        location = "Universotà degli studi di Cagliari"
+        location = "Università degli studi di Cagliari"
     )
     session.add(event)  # Aggiunge l'evento alla sessione
     session.commit()  # Conferma le modifiche
@@ -20,7 +20,7 @@ def test_event_creation(session: Session):
     assert stored_event.title == "Hackaton"  # Controlla che il titolo sia corretto 
     assert stored_event.description == "Sfida di programmazione"  # Controlla che la descrizione sia corretta
     assert stored_event.date == datetime(2025, 6, 24, 23, 00)  # Controlla che la data sia corretta 
-    assert stored_event.location == "Universotà degli studi di Cagliari"  # Controlla che la location sia corretta  
+    assert stored_event.location == "Università degli studi di Cagliari"  # Controlla che la location sia corretta  
     
 # Test per la validazione dei vincoli dell'evento   
 def test_event_field_validation(session: Session):
