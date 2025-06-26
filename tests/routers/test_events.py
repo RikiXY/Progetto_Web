@@ -95,3 +95,71 @@ def test_register_event_already_registered(client: TestClient, session: Session)
     assert response.status_code == 400  # Controlla che il codice di stato sia 400 (Bad Request)
     assert response.json()["detail"] == "User already registered for this event"  # Controlla che la risposta sia corretta
     
+# Test per recuperare gli eventi quando non ce ne sono
+def test_get_all_events_empty(client: TestClient):
+    response = client.get("/events/")
+    assert response.status_code == 200
+    assert response.json() == []
+
+# Test per recuperare tutti gli eventi
+def test_get_all_events_with_data(client: TestClient, session: Session):
+    session.add(Event(title="Evento 1", description="Descrizione 1", date=datetime(2025, 6, 18, 14, 30), location="Luogo 1"))
+    session.add(Event(title="Evento 2", description="Descrizione 2", date=datetime(2025, 6, 19, 14, 30), location="Luogo 2"))
+    session.commit()
+
+    response = client.get("/events/")
+    assert response.status_code == 200
+    payload = response.json()
+    assert len(payload) == 2
+    assert payload[0] == {"id": 1, "title": "Evento 1", "description": "Descrizione 1", "date": "2025-06-18T14:30:00", "location": "Luogo 1"}
+    assert payload[1] == {"id": 2, "title": "Evento 2", "description": "Descrizione 2", "date": "2025-06-19T14:30:00", "location": "Luogo 2"}
+
+# Test per aggiungere un evento con successo
+def test_add_event_success(client: TestClient, session: Session):
+    response = client.post("/events/", json={
+        "title": "Nuovo evento",
+        "description": "Descrizione del nuovo evento",
+        "date": "2025-06-20T14:30:00",
+        "location": "Luogo del nuovo evento"
+    })
+    assert response.status_code == 200
+    assert response.json() == "Event successfully added"
+
+    stored_event = session.get(Event, 1)
+    assert stored_event is not None
+    assert stored_event.title == "Nuovo evento"
+    assert stored_event.description == "Descrizione del nuovo evento"
+    assert stored_event.date == datetime(2025, 6, 20, 14, 30)
+    assert stored_event.location == "Luogo del nuovo evento"
+
+# Test per recuperare un evento con successo
+def test_get_event_success(client: TestClient, session: Session):
+    session.add(Event(title="Evento non generico", description="Descrizione non generica", date=datetime(2025, 6, 18, 14, 30), location="Luogo non generico"))
+    session.commit()
+
+    response = client.get(f"/events/1")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == 1
+    assert data["title"] == "Evento non generico"
+    assert data["description"] == "Descrizione non generica"
+    assert data["date"] == "2025-06-18T14:30:00"
+    assert data["location"] == "Luogo non generico"
+
+# Test per recuperare un evento che non esiste
+def test_get_event_not_found(client: TestClient):
+    response = client.get("/events/9999")
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Event not found"
+
+# Test per eliminare tutti gli eventi
+def test_delete_all_events(client: TestClient, session: Session):
+    session.add(Event(title="Evento 1", description="Descrizione 1", date=datetime(2025, 6, 18, 14, 30), location="Luogo 1"))
+    session.add(Event(title="Evento 2", description="Descrizione 2", date=datetime(2025, 6, 19, 14, 30), location="Luogo 2"))
+    session.commit()
+
+    response = client.delete("/events/")
+    assert response.status_code == 200
+    assert response.json() == "All events successfully deleted"
+
+    assert len(session.exec(select(Event)).all()) == 0

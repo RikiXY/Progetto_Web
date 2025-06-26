@@ -26,7 +26,7 @@ Alberto:
 - [X] Events@POST("/")
 - [X] Events@DELETE("/")
 - [X] Events@GET("/{event_id}")
-- [ ] Test proprie API
+- [X] Test proprie API
 
 Andrea:
 - [X] Events@PUT("/{event_id}")
