@@ -163,3 +163,35 @@ def test_delete_all_events(client: TestClient, session: Session):
     assert response.json() == "All events successfully deleted"
 
     assert len(session.exec(select(Event)).all()) == 0
+
+# Test per modificare un evento con successo
+def test_update_event_success(client: TestClient, session: Session):
+    session.add(Event(title="Evento da aggiornare", description="Descrizione vecchia", date=datetime(2025, 6, 18, 14, 30), location="Luogo vecchio"))
+    session.commit()
+
+    response = client.put(f"/events/1", json={
+        "title": "Evento aggiornato",
+        "description": "Descrizione aggiornata",
+        "date": "2025-06-18T15:00:00",
+        "location": "Luogo aggiornato"
+    })
+    assert response.status_code == 200
+    assert response.json() == f"Event 1 successfully updated"
+
+    stored_event = session.get(Event, 1)
+    assert stored_event is not None
+    assert stored_event.title == "Evento aggiornato"
+    assert stored_event.description == "Descrizione aggiornata"
+    assert stored_event.date == datetime(2025, 6, 18, 15, 0)
+    assert stored_event.location == "Luogo aggiornato"
+
+# Test per modificare un evento che non esiste
+def test_update_event_not_found(client: TestClient):
+    response = client.put("/events/9999", json={
+        "title": "Evento aggiornato",
+        "description": "Descrizione aggiornata",
+        "date": "2025-06-18T15:00:00",
+        "location": "Luogo aggiornato"
+    })
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Event not found"
